@@ -6,11 +6,13 @@ then
     comment_color=""
     number_color=""
     keyword_color=""
+    uncolor=""
 else
     type_color="\e[38;5;121m"
     comment_color="\e[38;5;051m"
     number_color="\e[38;5;201m"
     keyword_color="\e[38;5;226m"
+    uncolor="\e[m"
 fi
 
 clear
@@ -20,7 +22,7 @@ coding_speed=0.2
 indent_depth=1
 max_indent=5
 
-echo -e "$type_color""int\e[m main()"
+echo -e "$type_color""int$uncolor main()"
 echo "{"
 
 variable_pick_letter()
@@ -102,7 +104,7 @@ continuation_pick()
     ;;
     1)
         num=$(($RANDOM % 10))
-        echo -e "[$number_color$num\e[m]"
+        echo -e "[$number_color$num$uncolor]"
     ;;
     2)
         echo "->$(variable_pick)"
@@ -188,13 +190,13 @@ indenting_pick()
             step_operator="--"
         fi
 
-        echo -e "$keyword_color""for\e[m($type_color$(type_pick)\e[m $picked_letter=$number_color$num\e[m; $picked_letter$(operator_pick)$number_color$num_limit\e[m; $picked_letter$step_operator)"
+        echo -e "$keyword_color""for$uncolor($type_color$(type_pick)$uncolor $picked_letter=$number_color$num$uncolor; $picked_letter$(operator_pick)$number_color$num_limit$uncolor; $picked_letter$step_operator)"
     ;;
     1)
-        echo -e "$keyword_color""if\e[m($(variable_pick)$(operator_pick)$number_color$num_limit\e[m)"
+        echo -e "$keyword_color""if$uncolor($(variable_pick)$(operator_pick)$number_color$num_limit$uncolor)"
     ;;
     2)
-        echo -e "$keyword_color""while\e[m($(variable_pick)$(operator_pick)$number_color$num_limit\e[m)"
+        echo -e "$keyword_color""while$uncolor($(variable_pick)$(operator_pick)$number_color$num_limit$uncolor)"
     ;;
     esac
 }
@@ -213,10 +215,10 @@ function_add()
 
     if [[ $(($RANDOM%3)) -eq 0 ]]
     then
-        echo -e "$comment_color//$(verb_pick) side effects, deep copy $(variable_pick) before calling\e[m"
+        echo -e "$comment_color//$(verb_pick) side effects, deep copy $(variable_pick) before calling$uncolor"
     fi
 
-    echo -ne "$type_color$(type_pick)\e[m $(variable_pick_name)_$(variable_pick_name)("
+    echo -ne "$type_color$(type_pick)$uncolor $(variable_pick_name)_$(variable_pick_name)("
 
     args_amount=$(($RANDOM % 4))
     for ((i=0; i<$args_amount; i++))
@@ -226,7 +228,7 @@ function_add()
             echo -n ", "
         fi
 
-        echo -ne "$type_color$(type_pick)\e[m $(variable_pick)"
+        echo -ne "$type_color$(type_pick)$uncolor $(variable_pick)"
     done
 
     echo ")"
@@ -265,7 +267,7 @@ do
 
         if [[ $(($RANDOM % 4)) -eq 0 ]]
         then
-            echo -ne "$type_color$(type_pick) \e[m"
+            echo -ne "$type_color$(type_pick) $uncolor"
         fi
 
         picked_variable=$(variable_pick)
@@ -293,7 +295,7 @@ do
                 echo -n " to $(variable_pick)"
             fi
 
-            echo -e "\e[m"
+            echo -e "$uncolor"
         fi
 
         echo ""
@@ -311,7 +313,7 @@ do
                 echo -n ", $(verb_pick) if necessary"
             fi
 
-            echo -e "\e[m"
+            echo -e "$uncolor"
         fi
 
         echo ""
