@@ -13,7 +13,7 @@ else
     keyword_color="\e[38;5;226m"
 fi
 
-#clear
+clear
 
 coding_speed=0.2
 
